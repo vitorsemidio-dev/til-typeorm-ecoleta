@@ -1,0 +1,7 @@
+{
+  "name": "ecoleta-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Vitor Emidio <vitorsemidio.96@gmail.com>",
+  "license": "MIT"
+}
