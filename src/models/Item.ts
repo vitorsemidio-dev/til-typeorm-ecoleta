@@ -15,7 +15,7 @@ class Item {
   name: string;
 
   @Column()
-  value: number;
+  price: number;
 
   @CreateDateColumn()
   created_at: Date;
