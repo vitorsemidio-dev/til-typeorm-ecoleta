@@ -30,7 +30,9 @@
         "ts": "never"
       }
     ],
-    "@typescript-eslint/interface-name-prefix": "off"
+    "@typescript-eslint/interface-name-prefix": "off",
+    "class-methods-use-this": "off",
+    "camelcase": "off"
   },
   "settings": {
     "import/resolver": {
