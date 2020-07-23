@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
-import DeleteItemsService from '../services/DeleteItemsService';
-import CreateItemsService from '../services/CreateItemsService';
 import Item from '../models/Item';
+
+import CreateItemsService from '../services/CreateItemsService';
+import DeleteItemsService from '../services/DeleteItemsService';
+import UpdateItemsService from '../services/UpdateItemsService';
 
 const itemsRouter = Router();
 
@@ -27,16 +29,30 @@ itemsRouter.post('/', async (request, response) => {
   return response.json(item);
 });
 
-itemsRouter.put('/', async (request, response) => {
-  return response.json({ item: 'put' });
+itemsRouter.put('/:item_id', async (request, response) => {
+  const { item_id } = request.params;
+  const { name, price } = request.body;
+  try {
+    const updateItemsService = new UpdateItemsService();
+
+    const itemUpdated = await updateItemsService.execute({
+      item_id,
+      name,
+      price,
+    });
+
+    return response.json(itemUpdated);
+  } catch (err) {
+    return response.status(400).json({ message: err.message });
+  }
 });
 
-itemsRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params;
+itemsRouter.delete('/:item_id', async (request, response) => {
+  const { item_id } = request.params;
   try {
     const deleteItemsService = new DeleteItemsService();
 
-    await deleteItemsService.execute(id);
+    await deleteItemsService.execute(item_id);
 
     return response.status(204).json();
   } catch (err) {
