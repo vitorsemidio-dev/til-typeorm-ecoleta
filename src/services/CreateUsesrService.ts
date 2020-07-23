@@ -12,6 +12,16 @@ class CreateUsersService {
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const usersRepository = getRepository(User);
 
+    const checkEmail = await usersRepository.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (checkEmail) {
+      throw new Error('E-mail already used');
+    }
+
     const user = usersRepository.create({
       name,
       email,
