@@ -9,46 +9,62 @@ import UpdateUsersService from '../services/UpdateUsersService';
 
 class UsersController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body;
-    const createUsersService = new CreateUsersService();
+    try {
+      const { name, email, password } = request.body;
+      const createUsersService = new CreateUsersService();
 
-    const user = await createUsersService.execute({ name, email, password });
+      const user = await createUsersService.execute({ name, email, password });
 
-    return response.json(user);
+      return response.json(user);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { user_id } = request.params;
+    try {
+      const { user_id } = request.params;
 
-    const deleteUsersService = new DeleteUsersService();
+      const deleteUsersService = new DeleteUsersService();
 
-    await deleteUsersService.execute(user_id);
+      await deleteUsersService.execute(user_id);
 
-    return response.status(204).json();
+      return response.status(204).json();
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
-    const usersRepository = getRepository(User);
+    try {
+      const usersRepository = getRepository(User);
 
-    const users = await usersRepository.find();
+      const users = await usersRepository.find();
 
-    return response.json(users);
+      return response.json(users);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { user_id } = request.params;
-    const { name, email, password } = request.body;
+    try {
+      const { user_id } = request.params;
+      const { name, email, password } = request.body;
 
-    const updateUsersService = new UpdateUsersService();
+      const updateUsersService = new UpdateUsersService();
 
-    const userUpdated = await updateUsersService.execute({
-      user_id,
-      name,
-      email,
-      password,
-    });
+      const userUpdated = await updateUsersService.execute({
+        user_id,
+        name,
+        email,
+        password,
+      });
 
-    return response.json(userUpdated);
+      return response.json(userUpdated);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 }
 
