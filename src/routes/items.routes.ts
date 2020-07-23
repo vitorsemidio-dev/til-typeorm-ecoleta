@@ -26,4 +26,12 @@ itemsRouter.post('/', async (request, response) => {
   return response.json(item);
 });
 
+itemsRouter.put('/', async (request, response) => {
+  return response.json({ item: 'put' });
+});
+
+itemsRouter.delete('/', async (request, response) => {
+  return response.json({ item: 'delete' });
+});
+
 export default itemsRouter;

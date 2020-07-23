@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
-import CreateUsersService from '../services/CreateUsesrService';
+import CreateUsersService from '../services/CreateUsersService';
 
 import User from '../models/User';
 
@@ -30,6 +30,14 @@ usersRouter.post('/', async (request, response) => {
   } catch (err) {
     return response.status(400).json({ message: err.message });
   }
+});
+
+usersRouter.put('/', async (request, response) => {
+  return response.json({ user: 'put' });
+});
+
+usersRouter.delete('/', async (request, response) => {
+  return response.json({ user: 'delete' });
 });
 
 export default usersRouter;
