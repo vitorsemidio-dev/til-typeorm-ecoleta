@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
-import DeleteUsersService from '../services/DeleteUsersService';
 import CreateUsersService from '../services/CreateUsersService';
+import DeleteUsersService from '../services/DeleteUsersService';
+import UpdateUsersService from '../services/UpdateUsersService';
 
 import User from '../models/User';
 
@@ -33,16 +34,31 @@ usersRouter.post('/', async (request, response) => {
   }
 });
 
-usersRouter.put('/', async (request, response) => {
-  return response.json({ user: 'put' });
+usersRouter.put('/:user_id', async (request, response) => {
+  const { user_id } = request.params;
+  const { name, email, password } = request.body;
+  try {
+    const updateUsersService = new UpdateUsersService();
+
+    const userUpdated = await updateUsersService.execute({
+      user_id,
+      name,
+      email,
+      password,
+    });
+
+    return response.json(userUpdated);
+  } catch (err) {
+    return response.status(400).json({ message: err.message });
+  }
 });
 
-usersRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params;
+usersRouter.delete('/:user_id', async (request, response) => {
+  const { user_id } = request.params;
   try {
     const deleteUsersService = new DeleteUsersService();
 
-    await deleteUsersService.execute(id);
+    await deleteUsersService.execute(user_id);
 
     return response.status(204).json();
   } catch (err) {
