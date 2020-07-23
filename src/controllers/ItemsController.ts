@@ -9,42 +9,58 @@ import UpdateItemsService from '../services/UpdateItemsService';
 
 class ItemsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, price } = request.body;
+    try {
+      const { name, price } = request.body;
 
-    const createItemsService = new CreateItemsService();
+      const createItemsService = new CreateItemsService();
 
-    const item = await createItemsService.execute({ name, price });
+      const item = await createItemsService.execute({ name, price });
 
-    return response.json(item);
+      return response.json(item);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { item_id } = request.params;
+    try {
+      const { item_id } = request.params;
 
-    const deleteItemsService = new DeleteItemsService();
+      const deleteItemsService = new DeleteItemsService();
 
-    await deleteItemsService.execute(item_id);
+      await deleteItemsService.execute(item_id);
 
-    return response.status(204).json();
+      return response.status(204).json();
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async index(resquest: Request, response: Response): Promise<Response> {
-    const itemsRepository = getRepository(Item);
+    try {
+      const itemsRepository = getRepository(Item);
 
-    const items = await itemsRepository.find();
+      const items = await itemsRepository.find();
 
-    return response.json(items);
+      return response.json(items);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { item_id } = request.params;
-    const { name, price } = request.body;
+    try {
+      const { item_id } = request.params;
+      const { name, price } = request.body;
 
-    const updateItemsService = new UpdateItemsService();
+      const updateItemsService = new UpdateItemsService();
 
-    const itemUpdated = updateItemsService.execute({ item_id, name, price });
+      const itemUpdated = updateItemsService.execute({ item_id, name, price });
 
-    return response.json(itemUpdated);
+      return response.json(itemUpdated);
+    } catch (err) {
+      return response.status(400).json({ message: err.message });
+    }
   }
 }
 
