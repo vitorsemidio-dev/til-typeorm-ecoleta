@@ -23,6 +23,8 @@ describe('Update Users Service', () => {
 
   beforeEach(async () => {
     await connection.query('DROP FROM users');
+
+    updateUsersService = new UpdateUsersService();
   });
 
   afterAll(async () => {

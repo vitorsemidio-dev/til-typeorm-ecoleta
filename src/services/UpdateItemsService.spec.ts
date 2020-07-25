@@ -16,13 +16,15 @@ describe('Update Items Service', () => {
 
     await connection.query('DROP TABLE IF EXISTS items');
     await connection.query('DROP TABLE IF EXISTS users');
-    await connection.query('DROPS TABLE IF EXISTS migrations');
+    await connection.query('DROP TABLE IF EXISTS migrations');
 
     await connection.runMigrations();
   });
 
   beforeEach(async () => {
     await connection.query('DROP FROM users');
+
+    updateItemsService = new UpdateItemsService();
   });
 
   afterAll(async () => {

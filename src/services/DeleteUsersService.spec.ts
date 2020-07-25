@@ -23,6 +23,8 @@ describe('Delete Users Service', () => {
 
   beforeEach(async () => {
     await connection.query('DROP FROM users');
+
+    deleteUsersService = new DeleteUsersService();
   });
 
   afterAll(async () => {
