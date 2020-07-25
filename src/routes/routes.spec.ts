@@ -30,7 +30,7 @@ describe('Routes Test', () => {
     await mainConnection.close();
   });
 
-  it('should be list users', async () => {
+  it('should be able to list users', async () => {
     const {
       body: { id: idJane },
     } = await request(app).post('/users').send({
@@ -72,6 +72,50 @@ describe('Routes Test', () => {
         expect.objectContaining({
           name: 'Remi',
           id: idRemi,
+        }),
+      ]),
+    );
+  });
+
+  it('should be able to items', async () => {
+    const {
+      body: { id: idItemA },
+    } = await request(app).post('/items').send({
+      name: 'Item A',
+      price: 10,
+    });
+
+    const {
+      body: { id: idItemB },
+    } = await request(app).post('/items').send({
+      name: 'Item B',
+      price: 20,
+    });
+
+    const {
+      body: { id: idItemC },
+    } = await request(app).post('/items').send({
+      name: 'Item C',
+      price: 30,
+    });
+
+    const response = await request(app).get('/items');
+
+    expect(response.body).toHaveLength(3);
+
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'Item A',
+          id: idItemA,
+        }),
+        expect.objectContaining({
+          name: 'Item B',
+          id: idItemB,
+        }),
+        expect.objectContaining({
+          name: 'Item C',
+          id: idItemC,
         }),
       ]),
     );
