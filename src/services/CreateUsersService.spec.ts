@@ -22,11 +22,14 @@ describe('Create Users Service', () => {
   });
 
   beforeEach(async () => {
-    // TODO
+    await connection.query('DROP FROM users');
   });
 
   afterAll(async () => {
-    // TODO
+    const mainConnection = getConnection();
+
+    await connection.close();
+    await mainConnection.close();
   });
 
   it('should be able to create a new user', async () => {

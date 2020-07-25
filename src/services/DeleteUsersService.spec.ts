@@ -22,11 +22,14 @@ describe('Delete Users Service', () => {
   });
 
   beforeEach(async () => {
-    // TODO
+    await connection.query('DROP FROM users');
   });
 
   afterAll(async () => {
-    // TODO
+    const mainConnection = getConnection();
+
+    await connection.close();
+    await mainConnection.close();
   });
 
   it('should be able to delete an user', async () => {
