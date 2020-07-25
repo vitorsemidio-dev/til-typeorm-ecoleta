@@ -44,4 +44,13 @@ describe('Create Item', () => {
     expect(item.name).toEqual('Item do Test');
     expect(item.price).toEqual(1);
   });
+
+  it('should not be able to create a new item with negative price', async () => {
+    await expect(
+      createItemsService.execute({
+        name: 'Item do Test com preço negativo',
+        price: -1,
+      }),
+    ).rejects.toBeInstanceOf(Error);
+  });
 });
