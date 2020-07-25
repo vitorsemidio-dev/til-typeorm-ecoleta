@@ -3016,6 +3016,11 @@ jest-resolve@^26.1.0:
     resolve "^1.17.0"
     slash "^3.0.0"
 
+jest-runner-serial@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/jest-runner-serial/-/jest-runner-serial-1.1.1.tgz#cd4ed513ae1ba041c89eb8b821c08471a659c191"
+  integrity sha512-IydY1n6gdYSzeSRq4pYAEW7J0P1ceLGSMgceLViZEDeZG1/JwBFHhMCRhoDsLvaKH8xP0f/QhsULb9/5IXu9bQ==
+
 jest-runner@^26.1.0:
   version "26.1.0"
   resolved "https://registry.yarnpkg.com/jest-runner/-/jest-runner-26.1.0.tgz#457f7fc522afe46ca6db1dccf19f87f500b3288d"
