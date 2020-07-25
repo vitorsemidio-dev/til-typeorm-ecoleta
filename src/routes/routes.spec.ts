@@ -30,20 +30,26 @@ describe('Routes Test', () => {
     await mainConnection.close();
   });
 
-  it('should be test', async () => {
-    await request(app).post('/users').send({
+  it('should be list users', async () => {
+    const {
+      body: { id: idJane },
+    } = await request(app).post('/users').send({
       name: 'Jane Doe',
       email: 'janedoe@example.com',
       password: '123456',
     });
 
-    await request(app).post('/users').send({
+    const {
+      body: { id: idAlice },
+    } = await request(app).post('/users').send({
       name: 'Alice Kruger',
       email: 'alicekruger@example.com',
       password: '123456',
     });
 
-    await request(app).post('/users').send({
+    const {
+      body: { id: idRemi },
+    } = await request(app).post('/users').send({
       name: 'Remi',
       email: 'remi@sandstorm.com',
       password: '123456',
@@ -57,12 +63,15 @@ describe('Routes Test', () => {
       expect.arrayContaining([
         expect.objectContaining({
           name: 'Jane Doe',
+          id: idJane,
         }),
         expect.objectContaining({
           name: 'Alice Kruger',
+          id: idAlice,
         }),
         expect.objectContaining({
           name: 'Remi',
+          id: idRemi,
         }),
       ]),
     );
