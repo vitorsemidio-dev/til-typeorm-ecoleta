@@ -22,7 +22,7 @@ describe('Delete Users Service', () => {
   });
 
   beforeEach(async () => {
-    await connection.query('DROP FROM users');
+    await connection.query('DELETE FROM users');
 
     deleteUsersService = new DeleteUsersService();
   });
