@@ -1,6 +1,4 @@
-function sum(a: number, b: number): number {
-  return a + b;
-}
+import sum from './first-test';
 
 describe('first test', () => {
   it('should test if jest config is working for the first fake test', () => {
