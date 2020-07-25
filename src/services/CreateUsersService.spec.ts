@@ -35,10 +35,33 @@ describe('Create Users Service', () => {
   });
 
   it('should be able to create a new user', async () => {
-    // TODO
+    const user = await createUsersService.execute({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(user).toHaveProperty('id');
+    expect(user).toMatchObject({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
   });
 
   it('should not be able to create a new user with an email already registered', async () => {
-    // TODO
+    const { email } = await createUsersService.execute({
+      name: 'Alice Kruger',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    await expect(
+      createUsersService.execute({
+        name: 'Jane Doe',
+        email,
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(Error);
   });
 });
