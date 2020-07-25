@@ -1,12 +1,14 @@
-import { Connection, getConnection, getRepository } from 'typeorm';
+import { Connection, getConnection } from 'typeorm';
 
 import createConnection from '../database';
+import CreateItemsService from './CreateItemsService';
 
-import Item from '../models/Item';
-
-const connectionName = 'test-connection';
+// TODO: Descobrir como automatizar nome da conexão para os testes
+const connectionName = 'default';
 
 let connection: Connection;
+
+let createItemsService: CreateItemsService;
 
 describe('Create Item', () => {
   beforeAll(async () => {
@@ -21,6 +23,8 @@ describe('Create Item', () => {
 
   beforeEach(async () => {
     await connection.query('DELETE FROM items');
+
+    createItemsService = new CreateItemsService();
   });
 
   afterAll(async () => {
@@ -31,14 +35,10 @@ describe('Create Item', () => {
   });
 
   it('should be able to create a new item', async () => {
-    const itemsRepository = getRepository(Item, connectionName);
-
-    const item = itemsRepository.create({
+    const item = await createItemsService.execute({
       name: 'Item do Test',
       price: 1,
     });
-
-    await itemsRepository.save(item);
 
     expect(item).toHaveProperty('id');
     expect(item.name).toEqual('Item do Test');
