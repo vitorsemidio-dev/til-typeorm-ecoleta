@@ -4,11 +4,13 @@ import createConnection from '../database';
 
 import Item from '../models/Item';
 
+const connectionName = 'test-connection';
+
 let connection: Connection;
 
 describe('Create Item', () => {
   beforeAll(async () => {
-    connection = await createConnection('test-connection');
+    connection = await createConnection(connectionName);
 
     await connection.query('DROP TABLE IF EXISTS items');
     await connection.query('DROP TABLE IF EXISTS users');
@@ -29,7 +31,7 @@ describe('Create Item', () => {
   });
 
   it('should be able to create a new item', async () => {
-    const itemsRepository = getRepository(Item, 'test-connection');
+    const itemsRepository = getRepository(Item, connectionName);
 
     const item = itemsRepository.create({
       name: 'Item do Test',
@@ -40,5 +42,6 @@ describe('Create Item', () => {
 
     expect(item).toHaveProperty('id');
     expect(item.name).toEqual('Item do Test');
+    expect(item.price).toEqual(1);
   });
 });
