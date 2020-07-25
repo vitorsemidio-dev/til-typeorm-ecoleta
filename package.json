@@ -10,7 +10,7 @@
     "start": "ts-node src/server.ts",
     "lint": "eslint --fix --ext .ts src/**",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "test": "jest"
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "express": "^4.17.1",
