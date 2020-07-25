@@ -1,3 +1,13 @@
+import { Connection, getConnection } from 'typeorm';
+
+import DeleteUsersService from './DeleteUsersService';
+
+const connectionName = 'default';
+
+let connection: Connection;
+
+let deleteUsersService: DeleteUsersService;
+
 describe('Delete Users Service', () => {
   it('should be able to delete an user', async () => {
     // TODO

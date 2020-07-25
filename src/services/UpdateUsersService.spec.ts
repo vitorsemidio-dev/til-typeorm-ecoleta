@@ -1,3 +1,13 @@
+import { Connection, getConnection } from 'typeorm';
+
+import UpdateUsersService from './UpdateUsersService';
+
+const connectionName = 'default';
+
+let connection: Connection;
+
+let updateUsersService: UpdateUsersService;
+
 describe('Update Users Service', () => {
   it('should be able to update user', async () => {
     // TODO
