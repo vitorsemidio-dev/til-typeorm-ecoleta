@@ -18,6 +18,10 @@ class UpdateItemsService {
       throw new Error('Item does not exists');
     }
 
+    if (price < 0) {
+      throw new Error('Negative price');
+    }
+
     const itemUpdated = { ...itemExists, name, price };
 
     await itemsRepository.save(itemUpdated);
