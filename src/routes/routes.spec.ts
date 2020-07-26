@@ -121,6 +121,7 @@ describe('Routes Test', () => {
     // TEST EMPTY
   });
 
+  // List items
   it('should be able to items', async () => {
     const {
       body: { id: idItemA },
@@ -163,5 +164,36 @@ describe('Routes Test', () => {
         }),
       ]),
     );
+  });
+
+  // Create item
+  it('should be able to create a new item', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to create a new item with a negative price', async () => {
+    // TEST EMPTY
+  });
+
+  // Update item
+  it('should be able to update an item', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to update a non-existing item', async () => {
+    // TEST EMPTY
+  });
+
+  it('shoul not be able to update an item with a negative price', async () => {
+    // TEST EMPTY
+  });
+
+  // Delete item
+  it('should be able to delete an item', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to delete an item', async () => {
+    // TEST EMPTY
   });
 });
