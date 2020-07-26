@@ -20,10 +20,13 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
     "@typescript-eslint/no-unused-vars": ["error", {
       "argsIgnorePattern": "_"
     }],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "camelcase": "off",
+    "class-methods-use-this": "off",
+    "prettier/prettier": "error",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -31,9 +34,7 @@
         "ts": "never"
       }
     ],
-    "@typescript-eslint/interface-name-prefix": "off",
-    "class-methods-use-this": "off",
-    "camelcase": "off"
+    "import/no-extraneous-dependencies": "off"
   },
   "settings": {
     "import/resolver": {

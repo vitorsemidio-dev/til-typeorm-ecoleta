@@ -1,0 +1,22 @@
+{
+  "todohighlight.keywords": [
+    {
+      "text": "TEST RED:",
+      "backgroundColor": "#ff3355"
+    },
+    {
+      "text": "TEST GREEN:",
+      "backgroundColor": "#00aa11",
+    },
+    {
+      "text": "TEST EMPTY",
+      "backgroundColor": "#eee",
+      "color": "#333"
+    }
+  ],
+  "todohighlight.defaultStyle": {
+    "color": "#eee",
+    "cursor": "pointer",
+    "isWholeLine": false
+  }
+}
