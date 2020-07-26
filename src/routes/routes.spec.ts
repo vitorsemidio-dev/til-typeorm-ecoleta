@@ -80,19 +80,95 @@ describe('Routes Test', () => {
 
   // Create User
   it('should be able to create a new user', async () => {
-    // TEST EMPTY
+    const response = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(response.body).toHaveProperty('id');
+    expect(response.body).toMatchObject({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
   });
 
   it('should not be able to create a new user with a e-mail already registred', async () => {
-    // TEST EMPTY
+    await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    const response = await request(app).post('/users').send({
+      name: 'Remi',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   it('should not be able to create a new user with an invalid e-mail', async () => {
-    // TEST EMPTY
+    // TEST RED:
+    const response = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'invalida-email',
+      password: '123456',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   it('should not be able to create a new user without some information (name, email, password)', async () => {
-    // TEST EMPTY
+    // TEST GREEN: null value violates not-null constraint
+    const responseWithoutName = await request(app).post('/users').send({
+      email: 'withoutname@example.com',
+      password: '123456',
+    });
+
+    const responseWithoutEmail = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      password: '123456',
+    });
+
+    const responseWithoutPassword = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'withoutpassword@example.com',
+    });
+
+    expect(responseWithoutName.status).toBe(400);
+    expect(responseWithoutEmail.status).toBe(400);
+    expect(responseWithoutPassword.status).toBe(400);
+
+    expect(responseWithoutName.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
+
+    expect(responseWithoutEmail.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
+
+    expect(responseWithoutPassword.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   // Update User
