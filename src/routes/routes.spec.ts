@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Connection, getConnection } from 'typeorm';
+import { uuid } from 'uuidv4';
 
-import { response } from 'express';
 import app from '../app';
 import createConnection from '../database';
 
@@ -247,11 +247,40 @@ describe('Routes Test', () => {
   });
 
   it('should not be able to update e-mail to another one that is already used', async () => {
-    // TEST EMPTY
+    await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    const responseUser = await request(app).post('/users').send({
+      name: 'Remi',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(responseUser.status).toBe(400);
+    expect(responseUser.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   it('should not be able to update a non-existing user', async () => {
-    // TEST EMPTY
+    const id = uuid();
+    const response = await request(app).put(`/users/${id}`).send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   // Delete user
