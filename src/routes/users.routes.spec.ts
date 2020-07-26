@@ -200,7 +200,6 @@ describe('Routes Test', () => {
   });
 
   it('should be able to update each data from user', async () => {
-    // TEST RED: Fix service emptying not provider's data
     const {
       body: { id },
     } = await request(app).post('/users').send({
@@ -229,7 +228,7 @@ describe('Routes Test', () => {
     expect(responseUpdateEmail.body).toMatchObject({
       id,
       name: 'Remi',
-      email: 'remi@sandstorn.com',
+      email: 'remi@sandstorm.com',
       password: '123456',
     });
 

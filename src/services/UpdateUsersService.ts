@@ -4,9 +4,9 @@ import User from '../models/User';
 
 interface IRequest {
   user_id: string;
-  name: string;
-  password: string;
-  email: string;
+  name?: string;
+  password?: string;
+  email?: string;
 }
 
 class UpdateUsersService {
@@ -24,7 +24,12 @@ class UpdateUsersService {
       throw new Error('User does not exist');
     }
 
-    const userUpdated = { ...userExists, name, password, email };
+    const userUpdated = {
+      ...userExists,
+      name: name || userExists.name,
+      password: password || userExists.password,
+      email: email || userExists.email,
+    };
 
     await usersRepository.save(userUpdated);
 
