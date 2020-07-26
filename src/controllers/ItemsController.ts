@@ -55,7 +55,11 @@ class ItemsController {
 
       const updateItemsService = new UpdateItemsService();
 
-      const itemUpdated = updateItemsService.execute({ item_id, name, price });
+      const itemUpdated = await updateItemsService.execute({
+        item_id,
+        name,
+        price,
+      });
 
       return response.json(itemUpdated);
     } catch (err) {
