@@ -11,6 +11,10 @@ class CreateItemsService {
   public async execute({ name, price }: IRequest): Promise<Item> {
     const itemsRepository = getRepository(Item);
 
+    if (price < 0) {
+      throw new Error('Negative price');
+    }
+
     const item = itemsRepository.create({
       name,
       price,
