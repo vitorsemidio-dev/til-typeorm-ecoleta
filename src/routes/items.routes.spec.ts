@@ -164,11 +164,25 @@ describe('Routes Test', () => {
   });
 
   // Delete item
-  it('TEST EMPTY should be able to delete an item', async () => {
-    //
+  it('should be able to delete an item', async () => {
+    const {
+      body: { id },
+    } = await request(app).post('/items').send({
+      name: 'Item',
+      price: 1,
+    });
+
+    const responseDeleteItem = await request(app).delete(`/items/${id}`);
+
+    expect(responseDeleteItem.status).toBe(204);
+    expect(responseDeleteItem.body).toMatchObject({});
   });
 
-  it('TEST EMPTY should not be able to delete an item', async () => {
-    //
+  it('should not be able to delete an item', async () => {
+    const id = uuid();
+
+    const responseDeleteItem = await request(app).delete(`/items/${id}`);
+
+    expect(responseDeleteItem.status).toBe(400);
   });
 });
