@@ -9,7 +9,7 @@ const connectionName = 'test-connection';
 
 let connection: Connection;
 
-describe('Routes Test', () => {
+describe('Items Routes', () => {
   beforeAll(async () => {
     connection = await createConnection(connectionName);
 
@@ -94,7 +94,6 @@ describe('Routes Test', () => {
   });
 
   it('should not be able to create a new item with a negative price', async () => {
-    // TEST RED: Create RN on service
     const responseCreateItem = await request(app).post('/items').send({
       name: 'Item',
       price: -1,
@@ -110,9 +109,7 @@ describe('Routes Test', () => {
   });
 
   // Update item
-  // TODO update without await is breaking some tests
   it('should be able to update an item', async () => {
-    // TEST RED: await missing when call execute function
     const {
       body: { id },
     } = await request(app).post('/items').send({
@@ -136,7 +133,6 @@ describe('Routes Test', () => {
   });
 
   it('should not be able to update a non-existing item', async () => {
-    // TEST RED: await missing when call execute function
     const id = uuid();
 
     const responseUpdateItem = await request(app).put(`/items/${id}`).send({
@@ -148,7 +144,6 @@ describe('Routes Test', () => {
   });
 
   it('shoul not be able to update an item with a negative price', async () => {
-    // TEST RED: missing validate negative price
     const {
       body: { id },
     } = await request(app).post('/items').send({
