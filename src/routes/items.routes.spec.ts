@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { Connection, getConnection } from 'typeorm';
 
+import { response } from 'express';
 import app from '../app';
 import createConnection from '../database';
 
@@ -76,12 +77,36 @@ describe('Routes Test', () => {
   });
 
   // Create item
-  it('TEST EMPTY should be able to create a new item', async () => {
-    //
+  it('should be able to create a new item', async () => {
+    const responseCreateItem = await request(app).post('/items').send({
+      name: 'Item',
+      price: 1,
+    });
+
+    expect(responseCreateItem.status).toBe(200);
+    expect(responseCreateItem.body).toHaveProperty('id');
+    expect(responseCreateItem.body).toMatchObject(
+      expect.objectContaining({
+        name: 'Item',
+        price: 1,
+      }),
+    );
   });
 
-  it('TEST EMPTY should not be able to create a new item with a negative price', async () => {
-    //
+  it('should not be able to create a new item with a negative price', async () => {
+    // TEST RED: Create RN on service
+    const responseCreateItem = await request(app).post('/items').send({
+      name: 'Item',
+      price: -1,
+    });
+
+    expect(responseCreateItem.status).toBe(400);
+
+    expect(responseCreateItem.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   // Update item
