@@ -110,6 +110,7 @@ describe('Routes Test', () => {
   });
 
   // Update item
+  // TODO update without await is breaking some tests
   it('should be able to update an item', async () => {
     // TEST RED: await missing when call execute function
     const {
