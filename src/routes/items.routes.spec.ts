@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Connection, getConnection } from 'typeorm';
+import { uuid } from 'uuidv4';
 
-import { response } from 'express';
 import app from '../app';
 import createConnection from '../database';
 
@@ -110,16 +110,57 @@ describe('Routes Test', () => {
   });
 
   // Update item
-  it('TEST EMPTY should be able to update an item', async () => {
-    //
+  it('should be able to update an item', async () => {
+    // TEST RED: await missing when call execute function
+    const {
+      body: { id },
+    } = await request(app).post('/items').send({
+      name: 'Item',
+      price: 1,
+    });
+
+    const responseUpdateItem = await request(app).put(`/items/${id}`).send({
+      name: 'Item update',
+      price: 100,
+    });
+
+    expect(responseUpdateItem.status).toBe(200);
+    expect(responseUpdateItem.body).toHaveProperty('id');
+
+    expect(responseUpdateItem.body).toMatchObject({
+      id,
+      name: 'Item update',
+      price: 100,
+    });
   });
 
-  it('TEST EMPTY should not be able to update a non-existing item', async () => {
-    //
+  it('should not be able to update a non-existing item', async () => {
+    // TEST RED: await missing when call execute function
+    const id = uuid();
+
+    const responseUpdateItem = await request(app).put(`/items/${id}`).send({
+      name: 'Item',
+      price: 1,
+    });
+
+    expect(responseUpdateItem.status).toBe(400);
   });
 
-  it('TEST EMPTY shoul not be able to update an item with a negative price', async () => {
-    //
+  it('shoul not be able to update an item with a negative price', async () => {
+    // TEST RED: missing validate negative price
+    const {
+      body: { id },
+    } = await request(app).post('/items').send({
+      name: 'Item',
+      price: 1,
+    });
+
+    const responseUpdateItem = await request(app).put(`/items/${id}`).send({
+      name: 'Item update',
+      price: -1,
+    });
+
+    expect(responseUpdateItem.status).toBe(400);
   });
 
   // Delete item
