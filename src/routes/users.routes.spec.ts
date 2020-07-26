@@ -133,7 +133,6 @@ describe('Routes Test', () => {
   });
 
   it('should not be able to create a new user without some information (name, email, password)', async () => {
-    // TEST GREEN: null value violates not-null constraint
     const responseWithoutName = await request(app).post('/users').send({
       email: 'withoutname@example.com',
       password: '123456',

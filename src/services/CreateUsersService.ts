@@ -12,6 +12,10 @@ class CreateUsersService {
   public async execute({ name, email, password }: IRequest): Promise<User> {
     const usersRepository = getRepository(User);
 
+    if (!name || !email || !password) {
+      throw new Error('Missing information to create a new user');
+    }
+
     const checkEmail = await usersRepository.findOne({
       where: {
         email,
