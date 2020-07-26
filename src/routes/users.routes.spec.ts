@@ -9,7 +9,7 @@ const connectionName = 'test-connection';
 
 let connection: Connection;
 
-describe('Routes Test', () => {
+describe('Users Routes', () => {
   beforeAll(async () => {
     connection = await createConnection(connectionName);
 
