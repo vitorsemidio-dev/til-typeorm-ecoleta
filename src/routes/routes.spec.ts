@@ -30,6 +30,7 @@ describe('Routes Test', () => {
     await mainConnection.close();
   });
 
+  // List users
   it('should be able to list users', async () => {
     const {
       body: { id: idJane },
@@ -75,6 +76,49 @@ describe('Routes Test', () => {
         }),
       ]),
     );
+  });
+
+  // Create User
+  it('should be able to create a new user', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to create a new user with a e-mail already registred', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to create a new user with an invalid e-mail', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to create a new user without some information (name, email, password)', async () => {
+    // TEST EMPTY
+  });
+
+  // Update User
+  it('should be able to update all user information', async () => {
+    // TEST EMPTY
+  });
+
+  it('should be able to update each data from user', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to update e-mail to another one that is already used', async () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to update a non-existing user', async () => {
+    // TEST EMPTY
+  });
+
+  // Delete user
+  it('should be able to delete an user', () => {
+    // TEST EMPTY
+  });
+
+  it('should not be able to delete a non-existing user', async () => {
+    // TEST EMPTY
   });
 
   it('should be able to items', async () => {
