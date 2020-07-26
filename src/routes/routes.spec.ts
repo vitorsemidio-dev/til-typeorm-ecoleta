@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { Connection, getConnection } from 'typeorm';
 
+import { response } from 'express';
 import app from '../app';
 import createConnection from '../database';
 
@@ -173,11 +174,76 @@ describe('Routes Test', () => {
 
   // Update User
   it('should be able to update all user information', async () => {
-    // TEST EMPTY
+    const responseCreateUser = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    expect(responseCreateUser.body).toHaveProperty('id');
+
+    const { id } = responseCreateUser.body;
+
+    const responseUpdateUser = await request(app).put(`/users/${id}`).send({
+      name: 'Remi',
+      email: 'remi@example',
+      password: '654321',
+    });
+
+    expect(responseUpdateUser.body).toHaveProperty('id');
+    expect(responseUpdateUser.body.id).toEqual(responseCreateUser.body.id);
+    expect(responseUpdateUser.body).toMatchObject({
+      name: 'Remi',
+      email: 'remi@example',
+      password: '654321',
+    });
   });
 
   it('should be able to update each data from user', async () => {
-    // TEST EMPTY
+    // TEST RED: Fix service emptying not provider's data
+    const {
+      body: { id },
+    } = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    const responseUpdateName = await request(app).put(`/users/${id}`).send({
+      name: 'Remi',
+    });
+
+    expect(responseUpdateName.status).toBe(200);
+    expect(responseUpdateName.body).toMatchObject({
+      id,
+      name: 'Remi',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    const responseUpdateEmail = await request(app).put(`/users/${id}`).send({
+      email: 'remi@sandstorm.com',
+    });
+
+    expect(responseUpdateEmail.status).toBe(200);
+    expect(responseUpdateEmail.body).toMatchObject({
+      id,
+      name: 'Remi',
+      email: 'remi@sandstorn.com',
+      password: '123456',
+    });
+
+    const responseUpdatePassword = await request(app).put(`/users/${id}`).send({
+      password: '654321',
+    });
+
+    expect(responseUpdatePassword.status).toBe(200);
+    expect(responseUpdatePassword.body).toMatchObject({
+      id,
+      name: 'Remi',
+      email: 'remi@sandstorm.com',
+      password: '654321',
+    });
   });
 
   it('should not be able to update e-mail to another one that is already used', async () => {
