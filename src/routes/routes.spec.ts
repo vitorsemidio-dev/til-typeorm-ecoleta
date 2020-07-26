@@ -284,12 +284,30 @@ describe('Routes Test', () => {
   });
 
   // Delete user
-  it('should be able to delete an user', () => {
-    // TEST EMPTY
+  it('should be able to delete an user', async () => {
+    const {
+      body: { id },
+    } = await request(app).post('/users').send({
+      name: 'Jane Doe',
+      email: 'janedoe@example.com',
+      password: '123456',
+    });
+
+    const responseDeleteUser = await request(app).delete(`/users/${id}`);
+
+    expect(responseDeleteUser.status).toBe(204);
   });
 
   it('should not be able to delete a non-existing user', async () => {
-    // TEST EMPTY
+    const id = uuid();
+    const responseDeleteUser = await request(app).delete(`/users/${id}`);
+
+    expect(responseDeleteUser.status).toBe(400);
+    expect(responseDeleteUser.body).toMatchObject(
+      expect.objectContaining({
+        message: expect.any(String),
+      }),
+    );
   });
 
   // List items
@@ -338,33 +356,33 @@ describe('Routes Test', () => {
   });
 
   // Create item
-  it('should be able to create a new item', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should be able to create a new item', async () => {
+    //
   });
 
-  it('should not be able to create a new item with a negative price', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should not be able to create a new item with a negative price', async () => {
+    //
   });
 
   // Update item
-  it('should be able to update an item', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should be able to update an item', async () => {
+    //
   });
 
-  it('should not be able to update a non-existing item', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should not be able to update a non-existing item', async () => {
+    //
   });
 
-  it('shoul not be able to update an item with a negative price', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY shoul not be able to update an item with a negative price', async () => {
+    //
   });
 
   // Delete item
-  it('should be able to delete an item', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should be able to delete an item', async () => {
+    //
   });
 
-  it('should not be able to delete an item', async () => {
-    // TEST EMPTY
+  it('TEST EMPTY should not be able to delete an item', async () => {
+    //
   });
 });
