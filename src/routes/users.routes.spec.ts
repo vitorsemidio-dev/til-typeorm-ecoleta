@@ -117,7 +117,6 @@ describe('Routes Test', () => {
   });
 
   it('should not be able to create a new user with an invalid e-mail', async () => {
-    // TEST RED:
     const response = await request(app).post('/users').send({
       name: 'Jane Doe',
       email: 'invalida-email',

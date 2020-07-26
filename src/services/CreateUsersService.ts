@@ -16,6 +16,12 @@ class CreateUsersService {
       throw new Error('Missing information to create a new user');
     }
 
+    const regex = new RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i);
+
+    if (!regex.test(email)) {
+      throw new Error('Invalid e-mail');
+    }
+
     const checkEmail = await usersRepository.findOne({
       where: {
         email,
